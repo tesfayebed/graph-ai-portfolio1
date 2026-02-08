@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Portfolio for Generative AI for Work & Research — weekly submissions and course overview." />
+  <title>Victor Meza · Generative AI for Work & Research</title>
+  <style>
+    :root{
+      --bg0:#070A12;
+      --bg1:#0B1020;
+      --card:#0d1430cc;
+      --card2:#0b1229cc;
+      --stroke:#ffffff12;
+      --text:#eaf0ff;
+      --muted:#b8c2e6;
+      --muted2:#8e9acb;
+      --accent1:#7C3AED; /* violet */
+      --accent2:#22D3EE; /* cyan */
+      --accent3:#34D399; /* green */
+      --accent4:#F59E0B; /* amber */
+      --shadow: 0 18px 70px rgba(0,0,0,.55);
+      --radius: 22px;
+      --radius2: 16px;
+      --max: 1120px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1000px 600px at 10% 15%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(900px 600px at 92% 24%, rgba(34,211,238,.25), transparent 55%),
+        radial-gradient(900px 700px at 78% 92%, rgba(52,211,153,.16), transparent 60%),
+        radial-gradient(1100px 800px at 15% 95%, rgba(245,158,11,.12), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 55%, #060811);
+      overflow-x:hidden;
+    }
+
+    /* subtle noise overlay */
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
+      opacity:.28;
+    }
+
+    a{color:inherit; text-decoration:none}
+
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 22px;}
+
+    /* Top nav */
+    .nav{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(7,10,18,.82), rgba(7,10,18,.55));
+      border-bottom:1px solid var(--stroke);
+    }
+    .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:16px;}
+    .brand{display:flex; align-items:center; gap:12px; min-width: 220px;}
+    .logo{
+      width:38px; height:38px; border-radius:14px;
+      background:
+        radial-gradient(12px 12px at 30% 25%, rgba(255,255,255,.55), transparent 50%),
+        linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,211,238,.9));
+      box-shadow: 0 10px 35px rgba(124,58,237,.28);
+      border:1px solid rgba(255,255,255,.18);
+    }
+    .brand b{font-size:14px; letter-spacing:.2px;}
+    .brand span{display:block; font-size:12px; color:var(--muted2); margin-top:2px;}
+
+    .nav-links{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;}
+    .pill{
+      padding:10px 12px;
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius: 999px;
+      font-size:12px;
+      color:var(--muted);
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+    .pill:hover{transform: translateY(-1px); border-color: rgba(255,255,255,.24); background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));}
+
+    /* Hero */
+    header{padding:56px 0 24px; position:relative;}
+    .hero{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:22px;
+      align-items:stretch;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .card::after{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(800px 260px at 10% 10%, rgba(124,58,237,.25), transparent 60%),
+        radial-gradient(700px 260px at 92% 18%, rgba(34,211,238,.20), transparent 60%),
+        radial-gradient(600px 260px at 80% 92%, rgba(52,211,153,.16), transparent 60%);
+      filter: blur(18px);
+      opacity:.9;
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .card > *{position:relative; z-index:1;}
+
+    .hero-main{padding:28px 26px;}
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      font-size:12px; color:var(--muted);
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background: rgba(0,0,0,.18);
+    }
+    .dot{width:8px; height:8px; border-radius:999px; background: linear-gradient(135deg, var(--accent2), var(--accent1)); box-shadow:0 0 0 4px rgba(34,211,238,.08);}
+
+    h1{margin:14px 0 10px; font-size:44px; line-height:1.05; letter-spacing:-.8px;}
+    .subtitle{color:var(--muted); font-size:15.5px; line-height:1.6; max-width: 62ch;}
+
+    .cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px;}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 14px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.16);
+      background: linear-gradient(135deg, rgba(124,58,237,.85), rgba(34,211,238,.75));
+      box-shadow: 0 14px 40px rgba(124,58,237,.22);
+      font-weight:600;
+      font-size:13px;
+      transition: transform .18s ease, filter .18s ease;
+    }
+    .btn:hover{transform: translateY(-1px); filter:saturate(1.05) brightness(1.03);}
+
+    .btn.secondary{
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      color:var(--text);
+      box-shadow:none;
+    }
+
+    .meta{
+      display:flex; gap:14px; flex-wrap:wrap;
+      margin-top:20px;
+      padding-top:18px;
+      border-top: 1px solid var(--stroke);
+      color: var(--muted2);
+      font-size:12.5px;
+    }
+    .meta b{color:var(--text); font-weight:600;}
+
+    .hero-side{padding:18px; display:flex; flex-direction:column; gap:14px;}
+
+    .mini{
+      padding:16px;
+      border-radius: var(--radius2);
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.03));
+    }
+    .mini h3{margin:0 0 10px; font-size:13px; letter-spacing:.2px;}
+    .mini p{margin:0; color:var(--muted); font-size:13px; line-height:1.55;}
+
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
+    .chip{
+      font-size:12px; color:var(--muted);
+      padding:8px 10px;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+    }
+
+    /* Sections */
+    section{padding:28px 0;}
+    .section-title{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:14px;}
+    .section-title h2{margin:0; font-size:22px; letter-spacing:-.2px;}
+    .section-title p{margin:0; color:var(--muted2); font-size:13px; max-width: 70ch;}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+    }
+
+    .panel{
+      padding:20px;
+      border-radius: var(--radius);
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: 0 16px 60px rgba(0,0,0,.35);
+      position:relative;
+      overflow:hidden;
+    }
+    .panel::before{
+      content:"";
+      position:absolute; inset:-40px;
+      background: radial-gradient(450px 220px at 15% 10%, rgba(34,211,238,.15), transparent 60%),
+                  radial-gradient(450px 220px at 90% 15%, rgba(124,58,237,.12), transparent 60%),
+                  radial-gradient(450px 220px at 70% 90%, rgba(52,211,153,.10), transparent 60%);
+      filter: blur(18px);
+      pointer-events:none;
+      opacity:.9;
+    }
+    .panel > *{position:relative; z-index:1;}
+
+    .two-col{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+
+    .list{margin:0; padding-left:18px; color:var(--muted); line-height:1.65; font-size:13.5px;}
+    .list li{margin:6px 0;}
+
+    .statbar{display:grid; gap:10px; margin-top:10px;}
+    .stat{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:12px 12px;
+      border-radius: 16px;
+      border:1px solid var(--stroke);
+      background: rgba(0,0,0,.14);
+      color:var(--muted);
+      font-size:12.5px;
+    }
+    .stat b{color:var(--text)}
+
+    /* Course modules */
+    .modules{display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;}
+    .module{
+      padding:14px;
+      border-radius: 18px;
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.03));
+      min-height: 140px;
+    }
+    .module .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:11px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      color:var(--muted);
+      background: rgba(255,255,255,.04);
+    }
+    .module h3{margin:10px 0 8px; font-size:14px;}
+    .module p{margin:0; color:var(--muted); font-size:12.5px; line-height:1.55;}
+
+    /* Weekly submissions */
+    .weeks{display:grid; grid-template-columns: repeat(4, 1fr); gap:12px;}
+    .week{
+      padding:14px;
+      border-radius: 18px;
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      position:relative;
+      overflow:hidden;
+      transition: transform .18s ease, border-color .18s ease;
+    }
+    .week:hover{transform: translateY(-2px); border-color: rgba(255,255,255,.22)}
+    .week::after{
+      content:"";
+      position:absolute; inset:auto -30px -34px auto;
+      width:160px; height:160px; border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, rgba(34,211,238,.22), transparent 60%),
+                  radial-gradient(circle at 70% 60%, rgba(124,58,237,.20), transparent 60%);
+      filter: blur(0px);
+      opacity:.7;
+      pointer-events:none;
+    }
+    .week b{display:block; font-size:13px;}
+    .week span{display:block; margin-top:6px; color:var(--muted2); font-size:12px; line-height:1.45;}
+    .week a{
+      display:inline-flex; gap:8px; align-items:center;
+      margin-top:10px;
+      color: rgba(255,255,255,.85);
+      font-size:12px;
+      opacity:.9;
+    }
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:11px;
+      padding:4px 8px;
+      border-radius: 10px;
+      border:1px solid var(--stroke);
+      background: rgba(0,0,0,.16);
+      color: var(--muted);
+    }
+
+    footer{padding:26px 0 44px; color:var(--muted2); font-size:12.5px;}
+    .footer-card{padding:18px; border-radius: var(--radius); border:1px solid var(--stroke); background: rgba(0,0,0,.18);}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero{grid-template-columns:1fr;}
+      .grid{grid-template-columns:1fr;}
+      .modules{grid-template-columns:1fr 1fr;}
+      .weeks{grid-template-columns:1fr 1fr;}
+      h1{font-size:40px;}
+    }
+    @media (max-width: 560px){
+      h1{font-size:34px;}
+      .modules{grid-template-columns:1fr;}
+      .weeks{grid-template-columns:1fr;}
+      .brand{min-width:unset}
+      .two-col{grid-template-columns:1fr;}
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto}
+      .pill,.btn,.week{transition:none}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="Go to top">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <b>Victor Meza</b>
+          <span>Generative AI for Work & Research · Portfolio</span>
+        </div>
+      </a>
+      <div class="nav-links" role="navigation" aria-label="Primary">
+        <a class="pill" href="#about">About</a>
+        <a class="pill" href="#course">Course</a>
+        <a class="pill" href="#submissions">Weekly Submissions</a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="top">
+    <div class="wrap hero">
+      <div class="card hero-main">
+        <div class="kicker"><span class="dot" aria-hidden="true"></span> 8-week cohort · no‑code AI tools · responsible task automation</div>
+        <h1>Building practical, responsible AI workflows for work & research.</h1>
+        <p class="subtitle">
+          I’m a first‑year undergraduate studying <b>International Agricultural Development</b> at <b>UC Davis</b>.
+          This page tracks my progress through <b>Generative AI for Work & Research</b>—a hands‑on course focused on using AI tools to automate tasks, analyze data, and communicate research clearly.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn" href="#submissions" title="Jump to weekly submissions">
+            <span aria-hidden="true">✨</span>
+            Explore weekly work
+          </a>
+          <a class="btn secondary" href="#course" title="Learn about the course">
+            <span aria-hidden="true">🧠</span>
+            Course overview
+          </a>
+        </div>
+
+        <div class="meta">
+          <div><b>Location</b> · Davis, CA</div>
+          <div><b>Degree</b> · B.S. International Agricultural Development (Expected 2026)</div>
+          <div><b>Focus</b> · Productivity, research workflows, clear communication</div>
+        </div>
+      </div>
+
+      <aside class="card hero-side" aria-label="Highlights">
+        <div class="mini">
+          <h3>Skills snapshot</h3>
+          <p>Microsoft Office (Word, Excel, PowerPoint), spreadsheet organization, clear documentation.</p>
+          <div class="chips" aria-label="Skill tags">
+            <span class="chip">Excel systems</span>
+            <span class="chip">Process improvement</span>
+            <span class="chip">Writing & formatting</span>
+            <span class="chip">No-code AI tools</span>
+          </div>
+        </div>
+
+        <div class="mini">
+          <h3>Experience highlights</h3>
+          <p>
+            Volunteer work supporting clinic operations and interpretation;
+            small business owner running an online plant shop with 500+ sales.
+          </p>
+        </div>
+
+        <div class="mini">
+          <h3>Now</h3>
+          <p>Using AI to streamline research tasks, build lightweight web deliverables, and produce clean, shareable outputs.</p>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main>
+    <!-- About me -->
+    <section id="about">
+      <div class="wrap">
+        <div class="section-title">
+          <h2>About me</h2>
+          <p>A quick snapshot of what I’m studying, what I’ve built, and what I’m learning through this course.</p>
+        </div>
+
+        <div class="grid">
+          <div class="panel">
+            <h3 style="margin:0 0 10px; font-size:16px;">Profile</h3>
+            <p style="margin:0; color:var(--muted); line-height:1.7; font-size:13.5px;">
+              I’m an undergraduate at <b>University of California, Davis</b> pursuing a B.S. in <b>International Agricultural Development</b> (Expected June 2026).
+              I’m interested in applying practical AI tools to real workflows—organizing information, improving reporting, and building simple systems that help people do high-quality work faster.
+            </p>
+
+            <div class="two-col" style="margin-top:14px;">
+              <div class="stat"><b>Education</b><span>UC Davis · International Agricultural Development</span></div>
+              <div class="stat"><b>Languages</b><span>Tagalog (spoken fluency)</span></div>
+              <div class="stat"><b>Strengths</b><span>Organization · documentation · service</span></div>
+              <div class="stat"><b>Tools</b><span>Excel · Word · PowerPoint · AI assistants</span></div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3 style="margin:0 0 10px; font-size:16px;">Selected experience</h3>
+            <ul class="list">
+              <li><b>Volunteer, Knights Landing One Health Center (Davis, CA)</b> — clinic support, reception workflows, and interpretation support for patients.</li>
+              <li><b>Shop Owner, Plants4You</b> — ran an Etsy shop for specialty plants; managed inventory and shipping systems; improved tracking to reduce shipping costs.</li>
+            </ul>
+            <div class="statbar">
+              <div class="stat"><b>500+</b><span>online shop sales</span></div>
+              <div class="stat"><b>100+</b><span>plants propagated and maintained</span></div>
+              <div class="stat"><b>Process mindset</b><span>track, measure, iterate</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About the course -->
+    <section id="course">
+      <div class="wrap">
+        <div class="section-title">
+          <h2>About the course</h2>
+          <p>
+            <b>Generative AI for Work & Research</b> is an 8‑week live cohort course focused on no‑code AI tools for responsible task automation—
+            from writing and formatting outputs to data analysis, research synthesis, and building custom chatbots.
+          </p>
+        </div>
+
+        <div class="grid">
+          <div class="panel">
+            <h3 style="margin:0 0 10px; font-size:16px;">What I’m building</h3>
+            <ul class="list">
+              <li>Research-friendly outputs (Markdown, LaTeX, and HTML) and lightweight websites</li>
+              <li>Transparent data analysis workflows and automated reporting</li>
+              <li>Literature review + text analysis pipelines for faster synthesis</li>
+              <li>Custom GPTs/chatbots with retrieval (RAG) concepts and knowledge bases</li>
+              <li>Automation flows that reduce repetitive work while staying responsible</li>
+            </ul>
+            <div class="statbar" aria-label="Bootcamp features">
+              <div class="stat"><b>Weekly live workshops</b><span>hands‑on learning</span></div>
+              <div class="stat"><b>Help sessions</b><span>weekly support</span></div>
+              <div class="stat"><b>Capstone coaching</b><span>project feedback</span></div>
+              <div class="stat"><b>Certificate</b><span>shareable completion</span></div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3 style="margin:0 0 10px; font-size:16px;">Modules (high-level)</h3>
+            <div class="modules">
+              <div class="module">
+                <div class="tag">Module 1 · Websites & Docs</div>
+                <h3>Websites, documents & presentations</h3>
+                <p>Understand how LLMs work, generate structured outputs, and build simple research websites and presentations with AI assistants.</p>
+              </div>
+              <div class="module">
+                <div class="tag">Module 2 · Data</div>
+                <h3>AI‑automated data analysis</h3>
+                <p>Use AI tools responsibly for analysis, file manipulation, dashboards, visualizations, and automated reports.</p>
+              </div>
+              <div class="module">
+                <div class="tag">Module 3 · Text</div>
+                <h3>Research & text analysis</h3>
+                <p>Literature review acceleration, classification, summarization, and knowledge synthesis from large document collections.</p>
+              </div>
+              <div class="module">
+                <div class="tag">Module 4 · Chatbots</div>
+                <h3>Custom GPTs & chatbots</h3>
+                <p>Chat architecture, context windows, RAG systems, and building assistants for specific workflows.</p>
+              </div>
+              <div class="module">
+                <div class="tag">Module 5 · Automation</div>
+                <h3>AI for task automation</h3>
+                <p>Design practical automations and agent-style workflows for recurring tasks (responsibly and transparently).</p>
+              </div>
+              <div class="module">
+                <div class="tag">Module 6–7 · Communication</div>
+                <h3>Outreach + capstone showcase</h3>
+                <p>Create authentic research communication assets, then refine and present a final project with peer feedback.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Weekly submissions -->
+    <section id="submissions">
+      <div class="wrap">
+        <div class="section-title">
+          <h2>My weekly submissions</h2>
+          <p>Placeholders for now—each card will later link to my deliverable for that week (assignment, notes, or demo).</p>
+        </div>
+
+        <div class="weeks" aria-label="Weekly submission cards">
+          <div class="week">
+            <b>Week 1 · Foundations</b>
+            <span>Course setup, goals, and first experiments with structured outputs.</span>
+            <a href="#" onclick="return false;"><span class="kbd">Link pending</span> · add later</a>
+          </div>
+          <div class="week">
+            <b>Week 2 · Websites & docs</b>
+            <span>Markdown/HTML practice + lightweight research page prototype.</span>
+            <a href="#" onclick="return false;"><span class="kbd">Link pending</span> · add later</a>
+          </div>
+          <div class="week">
+            <b>Week 3 · Data workflows</b>
+            <span>Responsible data analysis + automated summary/report draft.</span>
+            <a href="#" onclick="return false;"><span class="kbd">Link pending</span> · add later</a>
+          </div>
+          <div class="week">
+            <b>Week 4 · Dashboards</b>
+            <span>Visualization concepts + a repeatable analysis template.</span>
+            <a href="#" onclick="return false;"><span class="kbd">Link pending</span> · add later</a>
+          </div>
+          <div class="week">
+            <b>Week 5 · Literature & synthesis</b>
+            <span>Text analysis, summarization workflows, and synthesis notes.</span>
+            <a href="#" onclick="return false;"><span class="kbd">Link pending</span> · add later</a>
+          </div>
+          <div class="week">
+            <b>Week 6 · Custom GPTs</b>
+            <span>Assistant design for a specific workflow; early RAG thinking.</span>
+            <a href="#" onclick="return false;"><span class="kbd">Link pending</span> · add later</a>
+          </div>
+          <div class="week">
+            <b>Week 7 · Automation</b>
+            <span>Agent-style workflow map + guardrails for responsible use.</span>
+            <a href="#" onclick="return false;"><span class="kbd">Link pending</span> · add later</a>
+          </div>
+          <div class="week">
+            <b>Week 8 · Capstone</b>
+            <span>Final project: build, refine, and present a responsible AI solution.</span>
+            <a href="#" onclick="return false;"><span class="kbd">Link pending</span> · add later</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-card">
+        <div style="display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+          <div>
+            <b style="color:var(--text)">Victor Meza</b>
+            <div style="margin-top:6px;">Portfolio page for <span style="color:var(--text)">Generative AI for Work & Research</span>.</div>
+          </div>
+          <div style="text-align:right; max-width:56ch;">
+            <div style="color:var(--muted)">No email shown to reduce spam.</div>
+            <div style="margin-top:6px; color:var(--muted2)">Tip: add your LinkedIn/GitHub links here later (optional).</div>
+          </div>
+        </div>
+        <div style="margin-top:14px; padding-top:14px; border-top:1px solid var(--stroke); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+          <span>© <span id="y"></span> · Built with semantic HTML + CSS (no frameworks)</span>
+          <span style="color:var(--muted)">Last updated: <span id="d"></span></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Tiny utility: dynamic year/date (no tracking, no external calls)
+    (function(){
+      const now = new Date();
+      const y = document.getElementById('y');
+      const d = document.getElementById('d');
+      if(y) y.textContent = String(now.getFullYear());
+      if(d) d.textContent = now.toLocaleDateString(undefined, { year:'numeric', month:'short', day:'2-digit' });
+    })();
+  </script>
+</body>
+</html>
